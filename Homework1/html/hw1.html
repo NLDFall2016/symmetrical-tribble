@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Homework 1</title><meta name="generator" content="MATLAB 9.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-09-12"><meta name="DC.source" content="hw1.m"><style type="text/css">
+      --><title>Homework 1</title><meta name="generator" content="MATLAB 9.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-09-18"><meta name="DC.source" content="hw1.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,7 +66,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Homework 1</h1><!--introduction--><p>Due 9/12/16</p><p>Rachael Steiner</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">xdot = -3x</a></li><li><a href="#2">xdot = 4x^2 - 16</a></li><li><a href="#3">xdot = 1 + 0.5cosx</a></li><li><a href="#4">xdot = 1 - x^14</a></li><li><a href="#5">About me and my goals</a></li></ul></div><h2>xdot = -3x<a name="1"></a></h2><p><b>1) Sketch the 1D flow</b></p><p><img vspace="5" hspace="5" src="..\eq1-edit2.PNG" alt=""> </p><p><b>2) Identify the fixed points and their stabilities, if any.</b></p><p>x = 0; stable</p><p><b>3) Simulate each, from at least 3 different initial conditions</b></p><pre class="codeinput">tspan = [0 5];
+  </style></head><body><div class="content"><h1>Homework 1</h1><!--introduction--><p>Due 9/12/16</p><p>Rachael Steiner</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">xdot = -3x</a></li><li><a href="#2">xdot = 4x^2 - 16</a></li><li><a href="#3">xdot = 1 + 0.5cosx</a></li><li><a href="#4">xdot = 1 - x^14</a></li><li><a href="#5">About me and my goals</a></li></ul></div><h2>xdot = -3x<a name="1"></a></h2><p><b>1) Sketch the 1D flow</b></p><p><img vspace="5" hspace="5" src="..\eq1-edit2.PNG" alt=""> </p><p><b>2) Identify the fixed points and their stabilities, if any.</b></p><p>x = 0; globally stable</p><p><b>3) Simulate each, from at least 3 different initial conditions</b></p><pre class="codeinput">tspan = [0 5];
 x0 = 1;
 [t,x] = ode23(@(t,x) -3*x, tspan, x0);
 plot(t, x, <span class="string">'-o'</span>)
@@ -78,18 +78,62 @@ hold <span class="string">on</span>
 
 x0b = 0.1;
 [t,x] = ode23(@(t,x) -3*x, tspan, x0b);
-plot(t, x, <span class="string">':d'</span>)
+plot(t, x, <span class="string">'-o'</span>)
 
 x0c = -0.5;
 [t,x] = ode23(@(t,x) -3*x, tspan, x0c);
-plot(t, x, <span class="string">'s'</span>)
+plot(t, x, <span class="string">'-o'</span>)
 
-title(legend(<span class="string">'1'</span>,<span class="string">'0.1'</span>,<span class="string">'-0.5'</span>), <span class="string">'x0'</span>)
+x0d = 0;
+[t,x] = ode23(@(t,x) -3*x, tspan, x0d);
+plot(t, x, <span class="string">'-o'</span>)
+
+title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d)), <span class="string">'x0'</span>)
+
+<span class="comment">% Euler Method:</span>
+
+<span class="comment">% x0s = [x0 x0b x0c x0d];</span>
+<span class="comment">% ode1 = @(x) -3*x;</span>
+<span class="comment">% dxdt_eul = zeros(1,length(x0s));</span>
+<span class="comment">%</span>
+<span class="comment">% for n = 1:length(x0s)</span>
+<span class="comment">%     dxdt_eul(n) = eul(ode1, 0, 5, 0.1, x0s(n));</span>
+<span class="comment">%     plot(0:0.1:5, dxdt_eul(n), '--')</span>
+<span class="comment">% end</span>
+
+ode1 = @(x) -3*x;
+dxdt_a = eul(ode1, 0, 5, 0.1, x0);
+dxdt_b = eul(ode1, 0, 5, 0.1, x0b);
+dxdt_c = eul(ode1, 0, 5, 0.1, x0c);
+dxdt_d = eul(ode1, 0, 5, 0.1, x0d);
+
+plot(0:0.1:5, dxdt_a, <span class="string">'--d'</span>)
+plot(0:0.1:5, dxdt_b, <span class="string">'--d'</span>)
+plot(0:0.1:5, dxdt_c, <span class="string">'--d'</span>)
+plot(0:0.1:5, dxdt_d, <span class="string">'--d'</span>)
+
+<span class="comment">% Improved euler method:</span>
+
+dxdt_a2 = eul2(ode1, 0, 5, 0.1, x0);
+dxdt_b2 = eul2(ode1, 0, 5, 0.1, x0b);
+dxdt_c2 = eul2(ode1, 0, 5, 0.1, x0c);
+dxdt_d2 = eul2(ode1, 0, 5, 0.1, x0d);
+
+plot(0:0.1:5, dxdt_a2, <span class="string">':*'</span>)
+plot(0:0.1:5, dxdt_b2, <span class="string">':*'</span>)
+plot(0:0.1:5, dxdt_c2, <span class="string">':*'</span>)
+plot(0:0.1:5, dxdt_d2, <span class="string">':*'</span>)
 
 hold <span class="string">off</span>
-</pre><img vspace="5" hspace="5" src="hw1_01.png" style="width:560px;height:420px;" alt=""> <h2>xdot = 4x^2 - 16<a name="2"></a></h2><p>1)</p><p><img vspace="5" hspace="5" src="..\eq2-edit2.PNG" alt=""> </p><p>2) x = -2, stable; x = 2, unstable</p><p>3)</p><pre class="codeinput">x0 = 0;
-[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0);
-plot(t, x, <span class="string">'-o'</span>)
+
+<span class="comment">% 4) Qualitative description</span>
+<span class="comment">%</span>
+<span class="comment">% Globally stable at x = 0. For x0 &gt; 0, decays to zero quickly. For x0 &lt; 0,</span>
+<span class="comment">% increases quickly to zero.</span>
+</pre><img vspace="5" hspace="5" src="hw1_01.png" style="width:560px;height:420px;" alt=""> <h2>xdot = 4x^2 - 16<a name="2"></a></h2><p>1)</p><p><img vspace="5" hspace="5" src="..\eq2-edit2.PNG" alt=""> </p><p>2) x = -2, locally stable; x = 2, unstable</p><p>3)</p><pre class="codeinput">tspan = [0 0.36];
+x0 = 0;
+[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0); <span class="comment">%%%%%% you can give it a vector of initial conditions!!</span>
+plot(t, x, <span class="string">'-s'</span>)
 title(<span class="string">'xdot = 4*x^2-16'</span>)
 xlabel(<span class="string">'t'</span>)
 ylabel(<span class="string">'x'</span>)
@@ -98,37 +142,113 @@ hold <span class="string">on</span>
 
 x0b = 2;
 [t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0b);
-plot(t, x, <span class="string">':d'</span>)
+plot(t, x, <span class="string">'-s'</span>)
 
-x0c = 1;
+x0c = -3;
 [t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0c);
-plot(t, x, <span class="string">'s'</span>)
+plot(t, x, <span class="string">'-s'</span>)
 
-title(legend(<span class="string">'0'</span>,<span class="string">'2'</span>,<span class="string">'1'</span>), <span class="string">'x0'</span>)
+x0d = 2.01;
+[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0d);
+plot(t, x, <span class="string">'-s'</span>)
+
+x0e = 1;
+[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0e);
+plot(t, x, <span class="string">'-s'</span>)
+
+title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d), num2str(x0e)), <span class="string">'x0'</span>)
+
+<span class="comment">% Euler method:</span>
+
+ode2 = @(x) 4*x^2-16;
+tmin = 0;
+tmax = 0.36;
+tstep = 0.01;
+dxdt_a = eul(ode2, tmin, tmax, tstep, x0);
+dxdt_b = eul(ode2, tmin, tmax, tstep, x0b);
+dxdt_c = eul(ode2, tmin, tmax, tstep, x0c);
+dxdt_d = eul(ode2, tmin, tmax, tstep, x0d);
+dxdt_e = eul(ode2, tmin, tmax, tstep, x0e);
+
+plot(tmin:tstep:tmax, dxdt_a, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_b, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_c, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_d, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_e, <span class="string">'--d'</span>)
+
+<span class="comment">% Improved euler method:</span>
+
+dxdt_a2 = eul2(ode2, tmin, tmax, tstep, x0);
+dxdt_b2 = eul2(ode2, tmin, tmax, tstep, x0b);
+dxdt_c2 = eul2(ode2, tmin, tmax, tstep, x0c);
+dxdt_d2 = eul2(ode2, tmin, tmax, tstep, x0d);
+dxdt_e2 = eul2(ode2, tmin, tmax, tstep, x0e);
+
+plot(tmin:tstep:tmax, dxdt_a2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_b2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_c2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_d2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_e2, <span class="string">':*'</span>)
 
 hold <span class="string">off</span>
-</pre><img vspace="5" hspace="5" src="hw1_02.png" style="width:560px;height:420px;" alt=""> <h2>xdot = 1 + 0.5cosx<a name="3"></a></h2><p>1)</p><p><img vspace="5" hspace="5" src="..\eq3-edit2.PNG" alt=""> </p><p>2) no fixed points</p><p>3)</p><pre class="codeinput">x0 = 0;
-[t,x] = ode23(@(t,x) 1+0.5*cos(x), tspan, x0);
-plot(t, x, <span class="string">'-o'</span>)
+
+<span class="comment">% 4) Locally stable at x = +/- 2. For x0 &lt; 2, converges on 2. For x0 &gt; 2,</span>
+<span class="comment">% increases to infinity rapidly.</span>
+</pre><img vspace="5" hspace="5" src="hw1_02.png" style="width:560px;height:420px;" alt=""> <h2>xdot = 1 + 0.5cosx<a name="3"></a></h2><p>1)</p><p><img vspace="5" hspace="5" src="..\eq3-edit2.PNG" alt=""> </p><p>2) no fixed points</p><p>3)</p><pre class="codeinput">tspan = [0 5];
+x0 = 0;
+x0b = -2;
+x0c = 1;
+[t,x] = ode23(@(t,x) 1+0.5*cos(x), tspan, [x0 x0b x0c]);
+plot(t, x, <span class="string">'-d'</span>)
+hold <span class="string">on</span>
 title(<span class="string">'xdot = 1 + 0.5*cos(x)'</span>)
 xlabel(<span class="string">'t'</span>)
 ylabel(<span class="string">'x'</span>)
 
-hold <span class="string">on</span>
-
-x0b = 2;
-[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0b);
-plot(t, x, <span class="string">':d'</span>)
-
-x0c = 1;
-[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0c);
-plot(t, x, <span class="string">'s'</span>)
-
 title(legend(num2str(x0), num2str(x0b), num2str(x0c)), <span class="string">'x0'</span>)
 
+<span class="comment">% Euler method:</span>
+
+ode3 = @(x) 1+0.5*cos(x);
+tmin = 0;
+tmax = 5;
+tstep = 0.1;
+dxdt_a = eul(ode3, tmin, tmax, tstep, x0);
+dxdt_b = eul(ode3, tmin, tmax, tstep, x0b);
+dxdt_c = eul(ode3, tmin, tmax, tstep, x0c);
+<span class="comment">% dxdt_d = eul(ode2, tmin, tmax, tstep, x0d);</span>
+<span class="comment">% dxdt_e = eul(ode2, tmin, tmax, tstep, x0e);</span>
+
+plot(tmin:tstep:tmax, dxdt_a, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_b, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_c, <span class="string">'--d'</span>)
+<span class="comment">% plot(tmin:tstep:tmax, dxdt_d, '--')</span>
+<span class="comment">% plot(tmin:tstep:tmax, dxdt_e, '--')</span>
+
+<span class="comment">% Improved euler method:</span>
+
+dxdt_a2 = eul2(ode3, tmin, tmax, tstep, x0);
+dxdt_b2 = eul2(ode3, tmin, tmax, tstep, x0b);
+dxdt_c2 = eul2(ode3, tmin, tmax, tstep, x0c);
+<span class="comment">% dxdt_d2 = eul2(ode2, tmin, tmax, tstep, x0d);</span>
+<span class="comment">% dxdt_e2 = eul2(ode2, tmin, tmax, tstep, x0e);</span>
+
+plot(tmin:tstep:tmax, dxdt_a2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_b2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_c2, <span class="string">':*'</span>)
+<span class="comment">% plot(tmin:tstep:tmax, dxdt_d2, ':')</span>
+<span class="comment">% plot(tmin:tstep:tmax, dxdt_e2, ':')</span>
+
 hold <span class="string">off</span>
-</pre><img vspace="5" hspace="5" src="hw1_03.png" style="width:560px;height:420px;" alt=""> <h2>xdot = 1 - x^14<a name="4"></a></h2><p>1)</p><p><img vspace="5" hspace="5" src="..\eq4-edit.PNG" alt=""> </p><p>2) x = -1, unstable; x = 1, stable</p><p>3)</p><pre class="codeinput">x0 = 0;
-[t,x] = ode23(@(t,x) 1 - x^14, tspan, x0);
+
+<span class="comment">% 4) Globally unstable. Increases for all x0.</span>
+</pre><img vspace="5" hspace="5" src="hw1_03.png" style="width:560px;height:420px;" alt=""> <h2>xdot = 1 - x^14<a name="4"></a></h2><p>1)</p><p><img vspace="5" hspace="5" src="..\eq4-edit.PNG" alt=""> </p><p>2) x = -1, unstable; x = 1, locally stable</p><p>3)</p><pre class="codeinput">tspan = [0 .25];
+x0 = 0;
+x0b = -1;
+x0c = 1;
+x0d = 1.5;
+<span class="comment">% x0e = -1.1;</span>
+[t,x] = ode23(@(t,x) 1 - x.^14, tspan, [x0 x0b x0c x0d]);
 plot(t, x, <span class="string">'-o'</span>)
 title(<span class="string">'xdot = 1 - x^ 14'</span>)
 xlabel(<span class="string">'t'</span>)
@@ -136,21 +256,62 @@ ylabel(<span class="string">'x'</span>)
 
 hold <span class="string">on</span>
 
-x0b = -1;
-[t,x] = ode23(@(t,x) 1 - x^14, tspan, x0b);
-plot(t, x, <span class="string">':d'</span>)
+<span class="comment">% x0b = -1;</span>
+<span class="comment">% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0b);</span>
+<span class="comment">% plot(t, x, ':d')</span>
+<span class="comment">%</span>
+<span class="comment">% x0c = 1;</span>
+<span class="comment">% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0c);</span>
+<span class="comment">% plot(t, x, '--s')</span>
+<span class="comment">%</span>
+<span class="comment">% x0d = 1.5;</span>
+<span class="comment">% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0d);</span>
+<span class="comment">% plot(t, x, '-*')</span>
 
-x0c = 1;
-[t,x] = ode23(@(t,x) 1 - x^14, tspan, x0c);
-plot(t, x, <span class="string">'--s'</span>)
+<span class="comment">% x0e = -1.5;</span>
+<span class="comment">% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0e);</span>
+<span class="comment">% plot(t, x, '-*')</span>
 
-x0d = 1.5;
-[t,x] = ode23(@(t,x) 1 - x^14, tspan, x0c);
-plot(t, x, <span class="string">'-*'</span>)
+<span class="comment">% Euler method:</span>
+
+ode4 = @(x) 1 - x.^14;
+tmin = 0;
+tmax = 0.25;
+tstep = 0.006;
+dxdt_a = eul(ode4, tmin, tmax, tstep, x0);
+dxdt_b = eul(ode4, tmin, tmax, tstep, x0b);
+dxdt_c = eul(ode4, tmin, tmax, tstep, x0c);
+dxdt_d = eul(ode4, tmin, tmax, tstep, x0d);
+<span class="comment">% dxdt_e = eul(ode2, tmin, tmax, tstep, x0e);</span>
+
+plot(tmin:tstep:tmax, dxdt_a, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_b, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_c, <span class="string">'--d'</span>)
+plot(tmin:tstep:tmax, dxdt_d, <span class="string">'--d'</span>)
+<span class="comment">% plot(tmin:tstep:tmax, dxdt_e, '--')</span>
+
+<span class="comment">% Improved euler method:</span>
+
+dxdt_a2 = eul2(ode4, tmin, tmax, tstep, x0);
+dxdt_b2 = eul2(ode4, tmin, tmax, tstep, x0b);
+dxdt_c2 = eul2(ode4, tmin, tmax, tstep, x0c);
+dxdt_d2 = eul2(ode4, tmin, tmax, tstep, x0d);
+<span class="comment">% dxdt_e2 = eul2(ode2, tmin, tmax, tstep, x0e);</span>
+
+plot(tmin:tstep:tmax, dxdt_a2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_b2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_c2, <span class="string">':*'</span>)
+plot(tmin:tstep:tmax, dxdt_d2, <span class="string">':*'</span>)
+<span class="comment">% plot(tmin:tstep:tmax, dxdt_e2, ':')</span>
+
+hold <span class="string">off</span>
 
 title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d)), <span class="string">'x0'</span>)
 
-hold <span class="string">off</span>
+<span class="comment">% hold off</span>
+
+<span class="comment">% 4) Locally stable at x = +/- 1. For x0 &gt; -1, converges on x = 1. For x0 &lt;</span>
+<span class="comment">% -1 (not shown), decreases rapidly.</span>
 </pre><img vspace="5" hspace="5" src="hw1_04.png" style="width:560px;height:420px;" alt=""> <h2>About me and my goals<a name="5"></a></h2><p>My main area of interest is in lexical knowledge. In particular, I am interested in how words are organized and how they interact with one another, as well as how they are acquired and what that might mean for the structure of their relationships. Graph theoretical networks are a growing topic of interest in this area, and a tool that I have been gaining experience with. One of the major criticisms of these networks, though, is that although predictions about function can be made to some extent based on the structure of the network, the networks themselves are static. Bringing in dynamics could help to enrich these networks and help make functional predictions more concrete. One dynamical system that I would like to be able to create would be a model of lexical acquisition---which words are acquired and when---based on the relationshops between the novel words and existing words, and on the properties of the environment in which the word is encountered.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Homework 1
@@ -167,7 +328,7 @@ hold <span class="string">off</span>
 %
 % *2) Identify the fixed points and their stabilities, if any.*
 %
-% x = 0; stable
+% x = 0; globally stable
 %
 % *3) Simulate each, from at least 3 different initial conditions*
 
@@ -183,15 +344,59 @@ hold on
 
 x0b = 0.1;
 [t,x] = ode23(@(t,x) -3*x, tspan, x0b);
-plot(t, x, ':d')
+plot(t, x, '-o')
 
 x0c = -0.5;
 [t,x] = ode23(@(t,x) -3*x, tspan, x0c);
-plot(t, x, 's')
+plot(t, x, '-o')
 
-title(legend('1','0.1','-0.5'), 'x0')
+x0d = 0;
+[t,x] = ode23(@(t,x) -3*x, tspan, x0d);
+plot(t, x, '-o')
+
+title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d)), 'x0')
+
+% Euler Method:
+
+% x0s = [x0 x0b x0c x0d];
+% ode1 = @(x) -3*x;
+% dxdt_eul = zeros(1,length(x0s));
+% 
+% for n = 1:length(x0s)
+%     dxdt_eul(n) = eul(ode1, 0, 5, 0.1, x0s(n));
+%     plot(0:0.1:5, dxdt_eul(n), 'REPLACE_WITH_DASH_DASH')
+% end
+
+ode1 = @(x) -3*x;
+dxdt_a = eul(ode1, 0, 5, 0.1, x0);
+dxdt_b = eul(ode1, 0, 5, 0.1, x0b);
+dxdt_c = eul(ode1, 0, 5, 0.1, x0c);
+dxdt_d = eul(ode1, 0, 5, 0.1, x0d);
+
+plot(0:0.1:5, dxdt_a, 'REPLACE_WITH_DASH_DASHd')
+plot(0:0.1:5, dxdt_b, 'REPLACE_WITH_DASH_DASHd')
+plot(0:0.1:5, dxdt_c, 'REPLACE_WITH_DASH_DASHd')
+plot(0:0.1:5, dxdt_d, 'REPLACE_WITH_DASH_DASHd')
+
+% Improved euler method:
+
+dxdt_a2 = eul2(ode1, 0, 5, 0.1, x0);
+dxdt_b2 = eul2(ode1, 0, 5, 0.1, x0b);
+dxdt_c2 = eul2(ode1, 0, 5, 0.1, x0c);
+dxdt_d2 = eul2(ode1, 0, 5, 0.1, x0d);
+
+plot(0:0.1:5, dxdt_a2, ':*')
+plot(0:0.1:5, dxdt_b2, ':*')
+plot(0:0.1:5, dxdt_c2, ':*')
+plot(0:0.1:5, dxdt_d2, ':*')
 
 hold off
+
+% 4) Qualitative description
+%
+% Globally stable at x = 0. For x0 > 0, decays to zero quickly. For x0 < 0,
+% increases quickly to zero.
+
 
 %% xdot = 4x^2 - 16
 % 
@@ -199,14 +404,15 @@ hold off
 %
 % <<..\eq2-edit2.PNG>>
 %
-% 2) x = -2, stable;
+% 2) x = -2, locally stable;
 % x = 2, unstable
 %
 % 3)
 
+tspan = [0 0.36];
 x0 = 0;
-[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0);
-plot(t, x, '-o')
+[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0); %%%%%% you can give it a vector of initial conditions!!
+plot(t, x, '-s')
 title('xdot = 4*x^2-16')
 xlabel('t')
 ylabel('x')
@@ -215,15 +421,58 @@ hold on
 
 x0b = 2;
 [t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0b);
-plot(t, x, ':d')
+plot(t, x, '-s')
 
-x0c = 1;
+x0c = -3;
 [t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0c);
-plot(t, x, 's')
+plot(t, x, '-s')
 
-title(legend('0','2','1'), 'x0')
+x0d = 2.01;
+[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0d);
+plot(t, x, '-s')
+
+x0e = 1;
+[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0e);
+plot(t, x, '-s')
+
+title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d), num2str(x0e)), 'x0')
+
+% Euler method:
+
+ode2 = @(x) 4*x^2-16;
+tmin = 0;
+tmax = 0.36;
+tstep = 0.01;
+dxdt_a = eul(ode2, tmin, tmax, tstep, x0);
+dxdt_b = eul(ode2, tmin, tmax, tstep, x0b);
+dxdt_c = eul(ode2, tmin, tmax, tstep, x0c);
+dxdt_d = eul(ode2, tmin, tmax, tstep, x0d);
+dxdt_e = eul(ode2, tmin, tmax, tstep, x0e);
+
+plot(tmin:tstep:tmax, dxdt_a, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_b, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_c, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_d, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_e, 'REPLACE_WITH_DASH_DASHd')
+
+% Improved euler method:
+
+dxdt_a2 = eul2(ode2, tmin, tmax, tstep, x0);
+dxdt_b2 = eul2(ode2, tmin, tmax, tstep, x0b);
+dxdt_c2 = eul2(ode2, tmin, tmax, tstep, x0c);
+dxdt_d2 = eul2(ode2, tmin, tmax, tstep, x0d);
+dxdt_e2 = eul2(ode2, tmin, tmax, tstep, x0e);
+
+plot(tmin:tstep:tmax, dxdt_a2, ':*')
+plot(tmin:tstep:tmax, dxdt_b2, ':*')
+plot(tmin:tstep:tmax, dxdt_c2, ':*')
+plot(tmin:tstep:tmax, dxdt_d2, ':*')
+plot(tmin:tstep:tmax, dxdt_e2, ':*')
 
 hold off
+
+% 4) Locally stable at x = +/- 2. For x0 < 2, converges on 2. For x0 > 2,
+% increases to infinity rapidly.
 
 
 %% xdot = 1 + 0.5cosx
@@ -236,27 +485,54 @@ hold off
 %
 % 3)
 
+tspan = [0 5];
 x0 = 0;
-[t,x] = ode23(@(t,x) 1+0.5*cos(x), tspan, x0);
-plot(t, x, '-o')
+x0b = -2;
+x0c = 1;
+[t,x] = ode23(@(t,x) 1+0.5*cos(x), tspan, [x0 x0b x0c]);
+plot(t, x, '-d')
+hold on
 title('xdot = 1 + 0.5*cos(x)')
 xlabel('t')
 ylabel('x')
 
-hold on
-
-x0b = 2;
-[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0b);
-plot(t, x, ':d')
-
-x0c = 1;
-[t,x] = ode23(@(t,x) 4*x^2-16, tspan, x0c);
-plot(t, x, 's')
-
 title(legend(num2str(x0), num2str(x0b), num2str(x0c)), 'x0')
+
+% Euler method:
+
+ode3 = @(x) 1+0.5*cos(x);
+tmin = 0;
+tmax = 5;
+tstep = 0.1;
+dxdt_a = eul(ode3, tmin, tmax, tstep, x0);
+dxdt_b = eul(ode3, tmin, tmax, tstep, x0b);
+dxdt_c = eul(ode3, tmin, tmax, tstep, x0c);
+% dxdt_d = eul(ode2, tmin, tmax, tstep, x0d);
+% dxdt_e = eul(ode2, tmin, tmax, tstep, x0e);
+
+plot(tmin:tstep:tmax, dxdt_a, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_b, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_c, 'REPLACE_WITH_DASH_DASHd')
+% plot(tmin:tstep:tmax, dxdt_d, 'REPLACE_WITH_DASH_DASH')
+% plot(tmin:tstep:tmax, dxdt_e, 'REPLACE_WITH_DASH_DASH')
+
+% Improved euler method:
+
+dxdt_a2 = eul2(ode3, tmin, tmax, tstep, x0);
+dxdt_b2 = eul2(ode3, tmin, tmax, tstep, x0b);
+dxdt_c2 = eul2(ode3, tmin, tmax, tstep, x0c);
+% dxdt_d2 = eul2(ode2, tmin, tmax, tstep, x0d);
+% dxdt_e2 = eul2(ode2, tmin, tmax, tstep, x0e);
+
+plot(tmin:tstep:tmax, dxdt_a2, ':*')
+plot(tmin:tstep:tmax, dxdt_b2, ':*')
+plot(tmin:tstep:tmax, dxdt_c2, ':*')
+% plot(tmin:tstep:tmax, dxdt_d2, ':')
+% plot(tmin:tstep:tmax, dxdt_e2, ':')
 
 hold off
 
+% 4) Globally unstable. Increases for all x0.
 
 %% xdot = 1 - x^14
 % 
@@ -265,12 +541,17 @@ hold off
 % <<..\eq4-edit.PNG>>
 %
 % 2) x = -1, unstable;
-% x = 1, stable
+% x = 1, locally stable
 %
 % 3)
 
+tspan = [0 .25];
 x0 = 0;
-[t,x] = ode23(@(t,x) 1 - x^14, tspan, x0);
+x0b = -1;
+x0c = 1;
+x0d = 1.5;
+% x0e = -1.1;
+[t,x] = ode23(@(t,x) 1 - x.^14, tspan, [x0 x0b x0c x0d]);
 plot(t, x, '-o')
 title('xdot = 1 - x^ 14')
 xlabel('t')
@@ -278,21 +559,62 @@ ylabel('x')
 
 hold on
 
-x0b = -1;
-[t,x] = ode23(@(t,x) 1 - x^14, tspan, x0b);
-plot(t, x, ':d')
+% x0b = -1;
+% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0b);
+% plot(t, x, ':d')
+% 
+% x0c = 1;
+% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0c);
+% plot(t, x, 'REPLACE_WITH_DASH_DASHs')
+% 
+% x0d = 1.5;
+% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0d);
+% plot(t, x, '-*')
 
-x0c = 1;
-[t,x] = ode23(@(t,x) 1 - x^14, tspan, x0c);
-plot(t, x, 'REPLACE_WITH_DASH_DASHs')
+% x0e = -1.5;
+% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0e);
+% plot(t, x, '-*')
 
-x0d = 1.5;
-[t,x] = ode23(@(t,x) 1 - x^14, tspan, x0c);
-plot(t, x, '-*')
+% Euler method:
+
+ode4 = @(x) 1 - x.^14;
+tmin = 0;
+tmax = 0.25;
+tstep = 0.006;
+dxdt_a = eul(ode4, tmin, tmax, tstep, x0);
+dxdt_b = eul(ode4, tmin, tmax, tstep, x0b);
+dxdt_c = eul(ode4, tmin, tmax, tstep, x0c);
+dxdt_d = eul(ode4, tmin, tmax, tstep, x0d);
+% dxdt_e = eul(ode2, tmin, tmax, tstep, x0e);
+
+plot(tmin:tstep:tmax, dxdt_a, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_b, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_c, 'REPLACE_WITH_DASH_DASHd')
+plot(tmin:tstep:tmax, dxdt_d, 'REPLACE_WITH_DASH_DASHd')
+% plot(tmin:tstep:tmax, dxdt_e, 'REPLACE_WITH_DASH_DASH')
+
+% Improved euler method:
+
+dxdt_a2 = eul2(ode4, tmin, tmax, tstep, x0);
+dxdt_b2 = eul2(ode4, tmin, tmax, tstep, x0b);
+dxdt_c2 = eul2(ode4, tmin, tmax, tstep, x0c);
+dxdt_d2 = eul2(ode4, tmin, tmax, tstep, x0d);
+% dxdt_e2 = eul2(ode2, tmin, tmax, tstep, x0e);
+
+plot(tmin:tstep:tmax, dxdt_a2, ':*')
+plot(tmin:tstep:tmax, dxdt_b2, ':*')
+plot(tmin:tstep:tmax, dxdt_c2, ':*')
+plot(tmin:tstep:tmax, dxdt_d2, ':*')
+% plot(tmin:tstep:tmax, dxdt_e2, ':')
+
+hold off
 
 title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d)), 'x0')
 
-hold off
+% hold off
+
+% 4) Locally stable at x = +/- 1. For x0 > -1, converges on x = 1. For x0 <
+% -1 (not shown), decreases rapidly.
 
 %% About me and my goals
 %
