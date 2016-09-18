@@ -28,18 +28,47 @@ hold on
 
 x0b = 0.1;
 [t,x] = ode23(@(t,x) -3*x, tspan, x0b);
-plot(t, x, ':d')
+plot(t, x, '-o')
 
 x0c = -0.5;
 [t,x] = ode23(@(t,x) -3*x, tspan, x0c);
-plot(t, x, '--s')
+plot(t, x, '-o')
 
 x0d = 0;
 [t,x] = ode23(@(t,x) -3*x, tspan, x0d);
-plot(t, x, '-.pm')
+plot(t, x, '-o')
 
 title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d)), 'x0')
 
+% Euler Method:
+
+ode1 = @(x) -3*x;
+dxdt_a = eul(ode1, 0, 5, 0.1, x0);
+dxdt_b = eul(ode1, 0, 5, 0.1, x0b);
+dxdt_c = eul(ode1, 0, 5, 0.1, x0c);
+dxdt_d = eul(ode1, 0, 5, 0.1, x0d);
+
+plot(0:0.1:5, dxdt_a, '--')
+plot(0:0.1:5, dxdt_b, '--')
+plot(0:0.1:5, dxdt_c, '--')
+plot(0:0.1:5, dxdt_d, '--')
+
+% Improved euler method:
+
+dxdt_a2 = eul2(ode1, 0, 5, 0.1, x0);
+dxdt_b2 = eul2(ode1, 0, 5, 0.1, x0b);
+dxdt_c2 = eul2(ode1, 0, 5, 0.1, x0c);
+dxdt_d2 = eul2(ode1, 0, 5, 0.1, x0d);
+
+plot(0:0.1:5, dxdt_a2, ':')
+plot(0:0.1:5, dxdt_b2, ':')
+plot(0:0.1:5, dxdt_c2, '"')
+plot(0:0.1:5, dxdt_d2, '--')
+
+
+% for n = [dxdt_a dxdt_b dxdt_c dxdt_d]
+%     plot(0:0.1:5, n)
+% end
 hold off
 
 % 4) Qualitative description
@@ -163,7 +192,8 @@ title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d)), 'x0')
 
 % hold off
 
-% 4) 
+% 4) Locally stable at x = +/- 1. For x0 > -1, converges on x = 1. For x0 <
+% -1 (not shown), decreases rapidly.
 
 %% About me and my goals
 %
