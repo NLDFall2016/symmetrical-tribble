@@ -39,17 +39,9 @@ x0d = 0;
 plot(t, x, '-o')
 
 title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d)), 'x0')
-%
+%%
 % *Euler Method:*
 %
-% x0s = [x0 x0b x0c x0d];
-% ode1 = @(x) -3*x;
-% dxdt_eul = zeros(1,length(x0s));
-% 
-% for n = 1:length(x0s)
-%     dxdt_eul(n) = eul(ode1, 0, 5, 0.1, x0s(n));
-%     plot(0:0.1:5, dxdt_eul(n), '--')
-% end
 
 ode1 = @(x) -3*x;
 dxdt_a = eul(ode1, 0, 5, 0.1, x0);
@@ -61,8 +53,8 @@ plot(0:0.1:5, dxdt_a, '--d')
 plot(0:0.1:5, dxdt_b, '--d')
 plot(0:0.1:5, dxdt_c, '--d')
 plot(0:0.1:5, dxdt_d, '--d')
-
-% Improved euler method:
+%%
+% *Improved euler method:*
 
 dxdt_a2 = eul2(ode1, 0, 5, 0.1, x0);
 dxdt_b2 = eul2(ode1, 0, 5, 0.1, x0b);
@@ -75,7 +67,7 @@ plot(0:0.1:5, dxdt_c2, ':*')
 plot(0:0.1:5, dxdt_d2, ':*')
 
 hold off
-
+%%
 % 4) Qualitative description
 %
 % Globally stable at x = 0. For x0 > 0, decays to zero quickly. For x0 < 0,
@@ -120,9 +112,9 @@ x0e = 1;
 plot(t, x, '-s')
 
 title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d), num2str(x0e)), 'x0')
-
-% Euler method:
-
+%%
+% *Euler method:*
+%
 ode2 = @(x) 4*x^2-16;
 tmin = 0;
 tmax = 0.36;
@@ -138,9 +130,9 @@ plot(tmin:tstep:tmax, dxdt_b, '--d')
 plot(tmin:tstep:tmax, dxdt_c, '--d')
 plot(tmin:tstep:tmax, dxdt_d, '--d')
 plot(tmin:tstep:tmax, dxdt_e, '--d')
-
-% Improved euler method:
-
+%%
+% *Improved euler method:*
+%
 dxdt_a2 = eul2(ode2, tmin, tmax, tstep, x0);
 dxdt_b2 = eul2(ode2, tmin, tmax, tstep, x0b);
 dxdt_c2 = eul2(ode2, tmin, tmax, tstep, x0c);
@@ -154,10 +146,10 @@ plot(tmin:tstep:tmax, dxdt_d2, ':*')
 plot(tmin:tstep:tmax, dxdt_e2, ':*')
 
 hold off
-
+%%
 % 4) Locally stable at x = +/- 2. For x0 < 2, converges on 2. For x0 > 2,
 % increases to infinity rapidly.
-
+%
 
 %% xdot = 1 + 0.5cosx
 % 
@@ -181,9 +173,9 @@ xlabel('t')
 ylabel('x')
 
 title(legend(num2str(x0), num2str(x0b), num2str(x0c)), 'x0')
-
-% Euler method:
-
+%%
+% *Euler method:*
+%
 ode3 = @(x) 1+0.5*cos(x);
 tmin = 0;
 tmax = 5;
@@ -191,31 +183,23 @@ tstep = 0.1;
 dxdt_a = eul(ode3, tmin, tmax, tstep, x0);
 dxdt_b = eul(ode3, tmin, tmax, tstep, x0b);
 dxdt_c = eul(ode3, tmin, tmax, tstep, x0c);
-% dxdt_d = eul(ode2, tmin, tmax, tstep, x0d);
-% dxdt_e = eul(ode2, tmin, tmax, tstep, x0e);
 
 plot(tmin:tstep:tmax, dxdt_a, '--d')
 plot(tmin:tstep:tmax, dxdt_b, '--d')
 plot(tmin:tstep:tmax, dxdt_c, '--d')
-% plot(tmin:tstep:tmax, dxdt_d, '--')
-% plot(tmin:tstep:tmax, dxdt_e, '--')
-
-% Improved euler method:
-
+%%
+% *Improved euler method:*
+%
 dxdt_a2 = eul2(ode3, tmin, tmax, tstep, x0);
 dxdt_b2 = eul2(ode3, tmin, tmax, tstep, x0b);
 dxdt_c2 = eul2(ode3, tmin, tmax, tstep, x0c);
-% dxdt_d2 = eul2(ode2, tmin, tmax, tstep, x0d);
-% dxdt_e2 = eul2(ode2, tmin, tmax, tstep, x0e);
 
 plot(tmin:tstep:tmax, dxdt_a2, ':*')
 plot(tmin:tstep:tmax, dxdt_b2, ':*')
 plot(tmin:tstep:tmax, dxdt_c2, ':*')
-% plot(tmin:tstep:tmax, dxdt_d2, ':')
-% plot(tmin:tstep:tmax, dxdt_e2, ':')
 
 hold off
-
+%%
 % 4) Globally unstable. Increases for all x0.
 
 %% xdot = 1 - x^14
@@ -234,7 +218,6 @@ x0 = 0;
 x0b = -1;
 x0c = 1;
 x0d = 1.5;
-% x0e = -1.1;
 [t,x] = ode23(@(t,x) 1 - x.^14, tspan, [x0 x0b x0c x0d]);
 plot(t, x, '-o')
 title('xdot = 1 - x^ 14')
@@ -242,25 +225,9 @@ xlabel('t')
 ylabel('x')
 
 hold on
-
-% x0b = -1;
-% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0b);
-% plot(t, x, ':d')
-% 
-% x0c = 1;
-% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0c);
-% plot(t, x, '--s')
-% 
-% x0d = 1.5;
-% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0d);
-% plot(t, x, '-*')
-
-% x0e = -1.5;
-% [t,x] = ode23(@(t,x) 1 - x^14, tspan, x0e);
-% plot(t, x, '-*')
-
-% Euler method:
-
+%%
+% *Euler method:*
+%
 ode4 = @(x) 1 - x.^14;
 tmin = 0;
 tmax = 0.25;
@@ -269,34 +236,28 @@ dxdt_a = eul(ode4, tmin, tmax, tstep, x0);
 dxdt_b = eul(ode4, tmin, tmax, tstep, x0b);
 dxdt_c = eul(ode4, tmin, tmax, tstep, x0c);
 dxdt_d = eul(ode4, tmin, tmax, tstep, x0d);
-% dxdt_e = eul(ode2, tmin, tmax, tstep, x0e);
 
 plot(tmin:tstep:tmax, dxdt_a, '--d')
 plot(tmin:tstep:tmax, dxdt_b, '--d')
 plot(tmin:tstep:tmax, dxdt_c, '--d')
 plot(tmin:tstep:tmax, dxdt_d, '--d')
-% plot(tmin:tstep:tmax, dxdt_e, '--')
-
-% Improved euler method:
-
+%%
+% *Improved euler method:*
+%
 dxdt_a2 = eul2(ode4, tmin, tmax, tstep, x0);
 dxdt_b2 = eul2(ode4, tmin, tmax, tstep, x0b);
 dxdt_c2 = eul2(ode4, tmin, tmax, tstep, x0c);
 dxdt_d2 = eul2(ode4, tmin, tmax, tstep, x0d);
-% dxdt_e2 = eul2(ode2, tmin, tmax, tstep, x0e);
 
 plot(tmin:tstep:tmax, dxdt_a2, ':*')
 plot(tmin:tstep:tmax, dxdt_b2, ':*')
 plot(tmin:tstep:tmax, dxdt_c2, ':*')
 plot(tmin:tstep:tmax, dxdt_d2, ':*')
-% plot(tmin:tstep:tmax, dxdt_e2, ':')
 
 hold off
 
 title(legend(num2str(x0), num2str(x0b), num2str(x0c), num2str(x0d)), 'x0')
-
-% hold off
-
+%%
 % 4) Locally stable at x = +/- 1. For x0 > -1, converges on x = 1. For x0 <
 % -1 (not shown), decreases rapidly.
 

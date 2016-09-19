@@ -1,4 +1,5 @@
 function eulx = eul(dxdt, t0, tn, dt, x0) 
+    %%% Adapted from in-class example
     t = t0:dt:tn;
     nsteps = length(t);
     eulx = zeros(1, nsteps);
