@@ -1,8 +1,6 @@
 %% Homework 2
 %
 % Rachael Steiner
-%
-% Due Sept. 19, 2016
 %%
 % For each of the following equations, sketch all of the qualitatively different vector fields
 % (i.e., phase portraits) that occur as r is varied, and the bifurcation diagram. State what
@@ -10,7 +8,7 @@
 % one of them for values of r at, above, and below the critical value; plot x vs. t for 2 initial
 % conditions for each r value, and comment on the results.
 %% xdot = rx - x(1-x)
-% 
+%
 % A transcritical bifurcation occurs at r = 1.
 
 r1 = 0;
@@ -40,18 +38,16 @@ hold off
 
 %%% Bifurcation diagram
 
-r = -4:0.01:4;
-xstar = @(r) 1 - r;
+rmin = -4;
+rmax = 4;
+rstep = 0.1;
+rcrit = 1;
+stable = 'before';
+xstar = @(r) 1.-r;
 figure(2)
-plot(r, feval(xstar, r));
+bifplot(rmin, rmax, rstep, rcrit, xstar, stable)
 title('Bifurcation diagram for xdot = rx - x(1-x)');
-xlabel('r');
-ylabel('x');
 axis([-4 4 -4 4]);
-hold on
-plot(r,zeros(1,length(r)), 'k');
-plot(zeros(1,length(r)), r, 'k');
-hold off
 
 %%% Simulate
 
@@ -283,4 +279,3 @@ title(legend(num2str(x0), num2str(x0b)), 'x0')
 % system converges on -sqrt(0.5)/0.5. For r = 1, x = -1 is a fixed point,
 % and when x0 = -0.8, the system converges on x = -1. For r = 2 and x0 =
 % -1, the system onverges on -sqrt(2)/2.
-
