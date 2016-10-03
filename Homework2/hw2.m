@@ -123,24 +123,32 @@ plot(x, y3)
 plot(x,zeros(1,length(x)), 'k');
 plot(zeros(1,length(x)), x, 'k');
 
-title(legend(num2str(r0), num2str(r1), num2str(r2), num2str(r3)), 'r');
+title(legend(num2str(r1), num2str(r2), num2str(r3)), 'r');
 
 hold off
 
 %%% Bifurcation diagram
 
-r = -4:0.01:4;
+rmin = -4;
+rmax = 4;
+rstep = 0.01;
+rcrit = 1;
+% r = -4:0.01:4;
 xstar = @(r) (r - 1)./r;
 figure(2)
-plot(r, feval(xstar, r));
+hold on;
+bifplot(xstar, rmin, rmax, rstep, rcrit, 'before')
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'before')
+
+% plot(r, feval(xstar, r));
 title('Bifurcation diagram for xdot = x - rx(1-x)');
-xlabel('r');
-ylabel('x');
+% xlabel('r');
+% ylabel('x');
 axis([-4 4 -4 4]);
 hold on
-plot(r, zeros(1,length(r)), 'k');
-plot(zeros(1,length(r)), r, 'k');
-hold off
+% plot([1 4], zeros(1, 2), 'k');
+plot(zeros(1, 2), [-4 4], 'k');
+hold off;
 
 %%% Simulate
 
@@ -184,10 +192,10 @@ title(legend(num2str(x0), num2str(x0b)), 'x0')
 
 %% xdot = x - rx^3
 %
-% A supercritical pitchfork bifurcation occurs at r = 1.
+% A supercritical pitchfork bifurcation occurs at r = 0.
 
-r1 = 0.5;
-r2 = 1;
+r1 = -2;
+r2 = 0;
 r3 = 2;
 x = -4:0.01:4;
 y = @(x, r) x - (x.^3).*r;
@@ -199,7 +207,7 @@ plot(x, y1);
 hold on
 plot(x,zeros(1,length(x)), 'k');
 plot(zeros(1,length(x)), x, 'k');
-title('xdot = x - 0.5x^3');
+title('xdot = x + 2x^3');
 xlabel('x');
 ylabel('xdot');
 axis([-3 3 -1 4]);
@@ -230,18 +238,24 @@ hold off
 
 %%% Bifurcation diagram
 
-r = -4:0.01:4;
+% r = -4:0.01:4;
+rmin = -4;
+rmax = 4;
+rstep = 0.01;
+rcrit = 0;
 xstar = @(r) (-(r.^0.5))./r;
+xstarb = @(r) (r.^0.5)./r;
 figure(2)
-plot(r, feval(xstar, r));
+hold on;
+bifplot(xstar, rmin, rmax, rstep, rcrit, 'after')
+bifplot(xstarb, rmin, rmax, rstep, rcrit, 'after')
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'after')
 title('Bifurcation diagram for xdot = xdot = x - 2x^3');
 xlabel('r');
 ylabel('x');
 axis([-4 4 -4 4]);
-hold on
-plot(r,zeros(1,length(r)), 'k');
-plot(zeros(1,length(r)), r, 'k');
-hold off
+plot(zeros(1, 2), [-4 4], 'k');
+hold off;
 
 %%% Simulate
 
@@ -253,17 +267,17 @@ yr1 = @(t, x) x - (x.^3).*r1;
 figure(3)
 subplot(2,2,1)
 plot(t, x, '-d')
-title('xdot = x - 0.5x^3')
+title('xdot = x + 2x^3')
 xlabel('t')
 ylabel('x')
 title(legend(num2str(x0), num2str(x0b)), 'x0')
 
 yr2 = @(t, x) x - (x.^3).*r2;
-[t,x] = ode23(yr2, tspan, [x0 -0.8]);
+[t,x] = ode23(yr2, tspan, [x0 x0b]);
 figure(3)
 subplot(2,2,2)
 plot(t, x, '-d')
-title('xdot = x - x^3')
+title('xdot = x')
 xlabel('t')
 ylabel('x')
 title(legend(num2str(x0), num2str(x0b)), 'x0')
@@ -279,7 +293,6 @@ ylabel('x')
 title(legend(num2str(x0), num2str(x0b)), 'x0')
 
 %%
-% For all values of r, x = 0 is a fixed point. For r = 0.5 and x0 = -1, the
-% system converges on -sqrt(0.5)/0.5. For r = 1, x = -1 is a fixed point,
-% and when x0 = -0.8, the system converges on x = -1. For r = 2 and x0 =
-% -1, the system onverges on -sqrt(2)/2.
+% For all values of r, x = 0 is a fixed point. For r = -2 and x0 = -1, the
+% system diverges from x = 0. For r = 0, the system is stable for x0 = 0 and
+% x0 = -1. For r = 2 and x0 = -1, the system onverges on -sqrt(2)/2.
