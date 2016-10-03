@@ -42,12 +42,16 @@ rmin = -4;
 rmax = 4;
 rstep = 0.1;
 rcrit = 1;
-stable = 'before';
-xstar = @(r) 1.-r;
+% stable = 'before';
+xstar = @(r) (1-r);
 figure(2)
-bifplot(rmin, rmax, rstep, rcrit, xstar, stable)
+hold on;
+bifplot(@(r) (1-r), rmin, rmax, rstep, rcrit, 'before')
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'before')
+plot(zeros(1, 2), [-4 4], 'k')
 title('Bifurcation diagram for xdot = rx - x(1-x)');
 axis([-4 4 -4 4]);
+hold off;
 
 %%% Simulate
 
@@ -134,7 +138,7 @@ xlabel('r');
 ylabel('x');
 axis([-4 4 -4 4]);
 hold on
-plot(r,zeros(1,length(r)), 'k');
+plot(r, zeros(1,length(r)), 'k');
 plot(zeros(1,length(r)), r, 'k');
 hold off
 
