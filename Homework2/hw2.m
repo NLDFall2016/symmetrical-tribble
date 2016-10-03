@@ -40,13 +40,12 @@ hold off
 
 rmin = -4;
 rmax = 4;
-rstep = 0.1;
+rstep = 0.01;
 rcrit = 1;
-% stable = 'before';
 xstar = @(r) (1-r);
 figure(2)
 hold on;
-bifplot(@(r) (1-r), rmin, rmax, rstep, rcrit, 'before')
+bifplot(xstar, rmin, rmax, rstep, rcrit, 'before')
 bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'before')
 plot(zeros(1, 2), [-4 4], 'k')
 title('Bifurcation diagram for xdot = rx - x(1-x)');
@@ -70,7 +69,6 @@ title(legend(num2str(x0), num2str(x0b)), 'x0')
 
 yr2 = @(t, x) (x.*r2) - x.*(1-x);
 [t,x] = ode23(yr2, tspan, [x0 x0b]);
-figure(3)
 subplot(2,2,2)
 plot(t, x, '-d')
 title('xdot = x - x(1-x)')
@@ -80,7 +78,6 @@ title(legend(num2str(x0), num2str(x0b)), 'x0')
 
 yr3 = @(t, x) (x.*r3) - x.*(1-x);
 [t,x] = ode23(yr3, tspan, [x0 -0.8]);
-figure(3)
 subplot(2,2,3)
 plot(t, x, '-d')
 title('xdot = 2x - x(1-x)')
@@ -99,33 +96,27 @@ title(legend(num2str(x0), num2str(-0.8)), 'x0')
 %
 % A transcritical bifurcation occurs at r = 1
 
-r0 = -1;
 r1 = 0.5;
 r2 = 1;
 r3 = 2;
 x = -4:0.01:4;
 y = @(x, r) x - r.*x.*(1-x);
-% y0 = feval(y, x, r0);
 y1 = feval(y, x, r1);
 y2 = feval(y, x, r2);
 y3 = feval(y, x, r3);
-figure(1)
+figure(4)
 plot(x, y1);
+hold on;
+plot(x, y2)
+plot(x, y3)
 title('xdot = x - rx(1-x)');
 xlabel('x');
 ylabel('xdot');
 axis([-4 4 -1 4]);
-
-hold on
-% plot(x, y0)
-plot(x, y2)
-plot(x, y3)
 plot(x,zeros(1,length(x)), 'k');
 plot(zeros(1,length(x)), x, 'k');
-
 title(legend(num2str(r1), num2str(r2), num2str(r3)), 'r');
-
-hold off
+hold off;
 
 %%% Bifurcation diagram
 
@@ -133,20 +124,13 @@ rmin = -4;
 rmax = 4;
 rstep = 0.01;
 rcrit = 1;
-% r = -4:0.01:4;
 xstar = @(r) (r - 1)./r;
-figure(2)
+figure(5)
 hold on;
 bifplot(xstar, rmin, rmax, rstep, rcrit, 'before')
 bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'before')
-
-% plot(r, feval(xstar, r));
 title('Bifurcation diagram for xdot = x - rx(1-x)');
-% xlabel('r');
-% ylabel('x');
 axis([-4 4 -4 4]);
-hold on
-% plot([1 4], zeros(1, 2), 'k');
 plot(zeros(1, 2), [-4 4], 'k');
 hold off;
 
@@ -157,7 +141,7 @@ x0 = 0;
 x0b = -1;
 yr1 = @(t, x) x - r1.*x.*(1-x);
 [t,x] = ode23(yr1, tspan, [x0 -0.8]);
-figure(3)
+figure(6)
 subplot(2,2,1)
 plot(t, x, '-d')
 title('xdot = x - 0.5x(1-x)')
@@ -167,7 +151,6 @@ title(legend(num2str(x0), num2str(-0.8)), 'x0')
 
 yr2 = @(t, x) x - r2.*x.*(1-x);
 [t,x] = ode23(yr2, tspan, [x0 x0b]);
-figure(3)
 subplot(2,2,2)
 plot(t, x, '-d')
 title('xdot = x - x(1-x)')
@@ -177,7 +160,6 @@ title(legend(num2str(x0), num2str(x0b)), 'x0')
 
 yr3 = @(t, x) x - r3.*x.*(1-x);
 [t,x] = ode23(yr3, tspan, [x0 x0b]);
-figure(3)
 subplot(2,2,3)
 plot(t, x, '-d')
 title('xdot = x - 2x(1-x)')
@@ -202,57 +184,35 @@ y = @(x, r) x - (x.^3).*r;
 y1 = feval(y, x, r1);
 y2 = feval(y, x, r2);
 y3 = feval(y, x, r3);
-subplot(2,2,1)
+figure(7);
 plot(x, y1);
-hold on
+hold on;
+plot(x, y2);
+plot(x, y3);
 plot(x,zeros(1,length(x)), 'k');
 plot(zeros(1,length(x)), x, 'k');
-title('xdot = x + 2x^3');
+title('xdot = x - rx^3');
 xlabel('x');
 ylabel('xdot');
 axis([-3 3 -1 4]);
-hold off
-
-% hold on
-subplot(2,2,2)
-plot(x, y2)
-hold on
-plot(x,zeros(1,length(x)), 'k');
-plot(zeros(1,length(x)), x, 'k');
-title('xdot = x - x^3');
-xlabel('x');
-ylabel('xdot');
-axis([-3 3 -1 4]);
-hold off
-
-subplot(2,2,3)
-plot(x, y3)
-hold on
-plot(x,zeros(1,length(x)), 'k');
-plot(zeros(1,length(x)), x, 'k');
-title('xdot = x - 2x^3');
-xlabel('x');
-ylabel('xdot');
-axis([-3 3 -1 4]);
-hold off
+hold off;
 
 %%% Bifurcation diagram
 
-% r = -4:0.01:4;
 rmin = -4;
 rmax = 4;
 rstep = 0.01;
 rcrit = 0;
 xstar = @(r) (-(r.^0.5))./r;
 xstarb = @(r) (r.^0.5)./r;
-figure(2)
+figure(8)
 hold on;
 bifplot(xstar, rmin, rmax, rstep, rcrit, 'after')
 bifplot(xstarb, rmin, rmax, rstep, rcrit, 'after')
 bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'after')
-title('Bifurcation diagram for xdot = xdot = x - 2x^3');
-xlabel('r');
-ylabel('x');
+title('Bifurcation diagram for xdot = x - rx^3');
+% xlabel('r');
+% ylabel('x');
 axis([-4 4 -4 4]);
 plot(zeros(1, 2), [-4 4], 'k');
 hold off;
@@ -264,7 +224,7 @@ x0 = 0;
 x0b = -1;
 yr1 = @(t, x) x - (x.^3).*r1;
 [t,x] = ode23(yr1, tspan, [x0 x0b]);
-figure(3)
+figure(9)
 subplot(2,2,1)
 plot(t, x, '-d')
 title('xdot = x + 2x^3')
@@ -274,7 +234,6 @@ title(legend(num2str(x0), num2str(x0b)), 'x0')
 
 yr2 = @(t, x) x - (x.^3).*r2;
 [t,x] = ode23(yr2, tspan, [x0 x0b]);
-figure(3)
 subplot(2,2,2)
 plot(t, x, '-d')
 title('xdot = x')
@@ -284,7 +243,6 @@ title(legend(num2str(x0), num2str(x0b)), 'x0')
 
 yr3 = @(t, x) x - (x.^3).*r3;
 [t,x] = ode23(yr3, tspan, [x0 x0b]);
-figure(3)
 subplot(2,2,3)
 plot(t, x, '-d')
 title('xdot = x - 2x^3')

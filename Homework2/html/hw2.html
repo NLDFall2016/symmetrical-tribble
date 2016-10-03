@@ -1,0 +1,532 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Homework 2</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-10-03"><meta name="DC.source" content="hw2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Homework 2</h1><!--introduction--><p>Rachael Steiner</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">xdot = rx - x(1-x)</a></li><li><a href="#3">Bifurcation diagram</a></li><li><a href="#4">Simulate</a></li><li><a href="#6">xdot = x - rx(1-x)</a></li><li><a href="#7">Bifurcation diagram</a></li><li><a href="#8">Simulate</a></li><li><a href="#10">xdot = x - rx^3</a></li><li><a href="#11">Bifurcation diagram</a></li><li><a href="#12">Simulate</a></li></ul></div><p>For each of the following equations, sketch all of the qualitatively different vector fields (i.e., phase portraits) that occur as r is varied, and the bifurcation diagram. State what kind of bifurcation occurs, and the critical value of r at which it occurs. Finally, simulate one of them for values of r at, above, and below the critical value; plot x vs. t for 2 initial conditions for each r value, and comment on the results.</p><h2 id="2">xdot = rx - x(1-x)</h2><p>A transcritical bifurcation occurs at r = 1.</p><pre class="codeinput">r1 = 0;
+r2 = 1;
+r3 = 2;
+x = -4:0.01:4;
+y = @(x, r) (x.*r) - x.*(1-x);
+y1 = feval(y, x, r1);
+y2 = feval(y, x, r2);
+y3 = feval(y, x, r3);
+figure(1)
+plot(x, y1);
+title(<span class="string">'xdot = rx - x(1-x)'</span>);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'xdot'</span>);
+axis([-3 3 -1 4]);
+
+hold <span class="string">on</span>
+plot(x, y2)
+plot(x, y3)
+plot(x,zeros(1,length(x)), <span class="string">'k'</span>);
+plot(zeros(1,length(x)), x, <span class="string">'k'</span>);
+
+title(legend(num2str(r1), num2str(r2), num2str(r3)), <span class="string">'r'</span>);
+
+hold <span class="string">off</span>
+</pre><h2 id="3">Bifurcation diagram</h2><pre class="codeinput">rmin = -4;
+rmax = 4;
+rstep = 0.01;
+rcrit = 1;
+xstar = @(r) (1-r);
+figure(2)
+hold <span class="string">on</span>;
+bifplot(xstar, rmin, rmax, rstep, rcrit, <span class="string">'before'</span>)
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, <span class="string">'before'</span>)
+plot(zeros(1, 2), [-4 4], <span class="string">'k'</span>)
+title(<span class="string">'Bifurcation diagram for xdot = rx - x(1-x)'</span>);
+axis([-4 4 -4 4]);
+hold <span class="string">off</span>;
+</pre><h2 id="4">Simulate</h2><pre class="codeinput">tspan = [0 5];
+x0 = 0;
+x0b = -1;
+yr1 = @(t, x) (x.*r1) - x.*(1-x);
+[t,x] = ode23(yr1, tspan, [x0 x0b]);
+figure(3)
+subplot(2,2,1)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = -x(1-x)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(x0b)), <span class="string">'x0'</span>)
+
+yr2 = @(t, x) (x.*r2) - x.*(1-x);
+[t,x] = ode23(yr2, tspan, [x0 x0b]);
+subplot(2,2,2)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = x - x(1-x)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(x0b)), <span class="string">'x0'</span>)
+
+yr3 = @(t, x) (x.*r3) - x.*(1-x);
+[t,x] = ode23(yr3, tspan, [x0 -0.8]);
+subplot(2,2,3)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = 2x - x(1-x)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(-0.8)), <span class="string">'x0'</span>)
+</pre><img vspace="5" hspace="5" src="hw2_01.png" alt=""> <img vspace="5" hspace="5" src="hw2_02.png" alt=""> <img vspace="5" hspace="5" src="hw2_03.png" alt=""> <p>For all values of r, x = 0 is a fixed point. For r &lt; 1 and x0 = -1, the system converges on zero quickly. For r = 1 and x0 = -1, the system converges on zero, but takes more time to do so. For r &gt; 1, both x = 0 and x = -1 are fixed points, and when x0 = -0.8, the system converges on x = -1 quickly.</p><h2 id="6">xdot = x - rx(1-x)</h2><p>A transcritical bifurcation occurs at r = 1</p><pre class="codeinput">r1 = 0.5;
+r2 = 1;
+r3 = 2;
+x = -4:0.01:4;
+y = @(x, r) x - r.*x.*(1-x);
+y1 = feval(y, x, r1);
+y2 = feval(y, x, r2);
+y3 = feval(y, x, r3);
+figure(4)
+plot(x, y1);
+hold <span class="string">on</span>;
+plot(x, y2)
+plot(x, y3)
+title(<span class="string">'xdot = x - rx(1-x)'</span>);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'xdot'</span>);
+axis([-4 4 -1 4]);
+plot(x,zeros(1,length(x)), <span class="string">'k'</span>);
+plot(zeros(1,length(x)), x, <span class="string">'k'</span>);
+title(legend(num2str(r1), num2str(r2), num2str(r3)), <span class="string">'r'</span>);
+hold <span class="string">off</span>;
+</pre><h2 id="7">Bifurcation diagram</h2><pre class="codeinput">rmin = -4;
+rmax = 4;
+rstep = 0.01;
+rcrit = 1;
+xstar = @(r) (r - 1)./r;
+figure(5)
+hold <span class="string">on</span>;
+bifplot(xstar, rmin, rmax, rstep, rcrit, <span class="string">'before'</span>)
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, <span class="string">'before'</span>)
+title(<span class="string">'Bifurcation diagram for xdot = x - rx(1-x)'</span>);
+axis([-4 4 -4 4]);
+plot(zeros(1, 2), [-4 4], <span class="string">'k'</span>);
+hold <span class="string">off</span>;
+</pre><h2 id="8">Simulate</h2><pre class="codeinput">tspan = [0 5];
+x0 = 0;
+x0b = -1;
+yr1 = @(t, x) x - r1.*x.*(1-x);
+[t,x] = ode23(yr1, tspan, [x0 -0.8]);
+figure(6)
+subplot(2,2,1)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = x - 0.5x(1-x)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(-0.8)), <span class="string">'x0'</span>)
+
+yr2 = @(t, x) x - r2.*x.*(1-x);
+[t,x] = ode23(yr2, tspan, [x0 x0b]);
+subplot(2,2,2)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = x - x(1-x)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(x0b)), <span class="string">'x0'</span>)
+
+yr3 = @(t, x) x - r3.*x.*(1-x);
+[t,x] = ode23(yr3, tspan, [x0 x0b]);
+subplot(2,2,3)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = x - 2x(1-x)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(x0b)), <span class="string">'x0'</span>)
+</pre><img vspace="5" hspace="5" src="hw2_04.png" alt=""> <img vspace="5" hspace="5" src="hw2_05.png" alt=""> <img vspace="5" hspace="5" src="hw2_06.png" alt=""> <p>For all values of r, x = 0 is a fixed point. For r &lt; 1, x = -1 is also a fixed point. When x0 = -0.8, system converges on x = -1. For r = 1 and x0 = -1, the system converges on zero. For r &gt; 1 and x0 = -1, the system converges on zero quickly.</p><h2 id="10">xdot = x - rx^3</h2><p>A supercritical pitchfork bifurcation occurs at r = 0.</p><pre class="codeinput">r1 = -2;
+r2 = 0;
+r3 = 2;
+x = -4:0.01:4;
+y = @(x, r) x - (x.^3).*r;
+y1 = feval(y, x, r1);
+y2 = feval(y, x, r2);
+y3 = feval(y, x, r3);
+figure(7);
+plot(x, y1);
+hold <span class="string">on</span>;
+plot(x, y2);
+plot(x, y3);
+plot(x,zeros(1,length(x)), <span class="string">'k'</span>);
+plot(zeros(1,length(x)), x, <span class="string">'k'</span>);
+title(<span class="string">'xdot = x - rx^3'</span>);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'xdot'</span>);
+axis([-3 3 -1 4]);
+hold <span class="string">off</span>;
+</pre><h2 id="11">Bifurcation diagram</h2><pre class="codeinput">rmin = -4;
+rmax = 4;
+rstep = 0.01;
+rcrit = 0;
+xstar = @(r) (-(r.^0.5))./r;
+xstarb = @(r) (r.^0.5)./r;
+figure(8)
+hold <span class="string">on</span>;
+bifplot(xstar, rmin, rmax, rstep, rcrit, <span class="string">'after'</span>)
+bifplot(xstarb, rmin, rmax, rstep, rcrit, <span class="string">'after'</span>)
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, <span class="string">'after'</span>)
+title(<span class="string">'Bifurcation diagram for xdot = x - rx^3'</span>);
+<span class="comment">% xlabel('r');</span>
+<span class="comment">% ylabel('x');</span>
+axis([-4 4 -4 4]);
+plot(zeros(1, 2), [-4 4], <span class="string">'k'</span>);
+hold <span class="string">off</span>;
+</pre><h2 id="12">Simulate</h2><pre class="codeinput">tspan = [0 3];
+x0 = 0;
+x0b = -1;
+yr1 = @(t, x) x - (x.^3).*r1;
+[t,x] = ode23(yr1, tspan, [x0 x0b]);
+figure(9)
+subplot(2,2,1)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = x + 2x^3'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(x0b)), <span class="string">'x0'</span>)
+
+yr2 = @(t, x) x - (x.^3).*r2;
+[t,x] = ode23(yr2, tspan, [x0 x0b]);
+subplot(2,2,2)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = x'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(x0b)), <span class="string">'x0'</span>)
+
+yr3 = @(t, x) x - (x.^3).*r3;
+[t,x] = ode23(yr3, tspan, [x0 x0b]);
+subplot(2,2,3)
+plot(t, x, <span class="string">'-d'</span>)
+title(<span class="string">'xdot = x - 2x^3'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'x'</span>)
+title(legend(num2str(x0), num2str(x0b)), <span class="string">'x0'</span>)
+</pre><pre class="codeoutput">Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Imaginary parts of complex X and/or Y arguments ignored 
+Warning: Failure at t=2.030510e-01.  Unable to meet integration tolerances
+without reducing the step size below the smallest value allowed (4.440892e-16)
+at time t. 
+</pre><img vspace="5" hspace="5" src="hw2_07.png" alt=""> <img vspace="5" hspace="5" src="hw2_08.png" alt=""> <img vspace="5" hspace="5" src="hw2_09.png" alt=""> <p>For all values of r, x = 0 is a fixed point. For r = -2 and x0 = -1, the system diverges from x = 0. For r = 0, the system is stable for x0 = 0 and x0 = -1. For r = 2 and x0 = -1, the system onverges on -sqrt(2)/2.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Homework 2
+%
+% Rachael Steiner
+%%
+% For each of the following equations, sketch all of the qualitatively different vector fields
+% (i.e., phase portraits) that occur as r is varied, and the bifurcation diagram. State what
+% kind of bifurcation occurs, and the critical value of r at which it occurs. Finally, simulate
+% one of them for values of r at, above, and below the critical value; plot x vs. t for 2 initial
+% conditions for each r value, and comment on the results.
+%% xdot = rx - x(1-x)
+%
+% A transcritical bifurcation occurs at r = 1.
+
+r1 = 0;
+r2 = 1;
+r3 = 2;
+x = -4:0.01:4;
+y = @(x, r) (x.*r) - x.*(1-x);
+y1 = feval(y, x, r1);
+y2 = feval(y, x, r2);
+y3 = feval(y, x, r3);
+figure(1)
+plot(x, y1);
+title('xdot = rx - x(1-x)');
+xlabel('x');
+ylabel('xdot');
+axis([-3 3 -1 4]);
+
+hold on
+plot(x, y2)
+plot(x, y3)
+plot(x,zeros(1,length(x)), 'k');
+plot(zeros(1,length(x)), x, 'k');
+
+title(legend(num2str(r1), num2str(r2), num2str(r3)), 'r');
+
+hold off
+
+%%% Bifurcation diagram
+
+rmin = -4;
+rmax = 4;
+rstep = 0.01;
+rcrit = 1;
+xstar = @(r) (1-r);
+figure(2)
+hold on;
+bifplot(xstar, rmin, rmax, rstep, rcrit, 'before')
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'before')
+plot(zeros(1, 2), [-4 4], 'k')
+title('Bifurcation diagram for xdot = rx - x(1-x)');
+axis([-4 4 -4 4]);
+hold off;
+
+%%% Simulate
+
+tspan = [0 5];
+x0 = 0;
+x0b = -1;
+yr1 = @(t, x) (x.*r1) - x.*(1-x);
+[t,x] = ode23(yr1, tspan, [x0 x0b]);
+figure(3)
+subplot(2,2,1)
+plot(t, x, '-d')
+title('xdot = -x(1-x)')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(x0b)), 'x0')
+
+yr2 = @(t, x) (x.*r2) - x.*(1-x);
+[t,x] = ode23(yr2, tspan, [x0 x0b]);
+subplot(2,2,2)
+plot(t, x, '-d')
+title('xdot = x - x(1-x)')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(x0b)), 'x0')
+
+yr3 = @(t, x) (x.*r3) - x.*(1-x);
+[t,x] = ode23(yr3, tspan, [x0 -0.8]);
+subplot(2,2,3)
+plot(t, x, '-d')
+title('xdot = 2x - x(1-x)')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(-0.8)), 'x0')
+
+%%
+% For all values of r, x = 0 is a fixed point. For r < 1 and x0 = -1, the
+% system converges on zero quickly. For r = 1 and x0 = -1, the system
+% converges on zero, but takes more time to do so. For r > 1, both x = 0
+% and x = -1 are fixed points, and when x0 = -0.8, the system converges on x
+% = -1 quickly.
+
+%% xdot = x - rx(1-x)
+%
+% A transcritical bifurcation occurs at r = 1
+
+r1 = 0.5;
+r2 = 1;
+r3 = 2;
+x = -4:0.01:4;
+y = @(x, r) x - r.*x.*(1-x);
+y1 = feval(y, x, r1);
+y2 = feval(y, x, r2);
+y3 = feval(y, x, r3);
+figure(4)
+plot(x, y1);
+hold on;
+plot(x, y2)
+plot(x, y3)
+title('xdot = x - rx(1-x)');
+xlabel('x');
+ylabel('xdot');
+axis([-4 4 -1 4]);
+plot(x,zeros(1,length(x)), 'k');
+plot(zeros(1,length(x)), x, 'k');
+title(legend(num2str(r1), num2str(r2), num2str(r3)), 'r');
+hold off;
+
+%%% Bifurcation diagram
+
+rmin = -4;
+rmax = 4;
+rstep = 0.01;
+rcrit = 1;
+xstar = @(r) (r - 1)./r;
+figure(5)
+hold on;
+bifplot(xstar, rmin, rmax, rstep, rcrit, 'before')
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'before')
+title('Bifurcation diagram for xdot = x - rx(1-x)');
+axis([-4 4 -4 4]);
+plot(zeros(1, 2), [-4 4], 'k');
+hold off;
+
+%%% Simulate
+
+tspan = [0 5];
+x0 = 0;
+x0b = -1;
+yr1 = @(t, x) x - r1.*x.*(1-x);
+[t,x] = ode23(yr1, tspan, [x0 -0.8]);
+figure(6)
+subplot(2,2,1)
+plot(t, x, '-d')
+title('xdot = x - 0.5x(1-x)')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(-0.8)), 'x0')
+
+yr2 = @(t, x) x - r2.*x.*(1-x);
+[t,x] = ode23(yr2, tspan, [x0 x0b]);
+subplot(2,2,2)
+plot(t, x, '-d')
+title('xdot = x - x(1-x)')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(x0b)), 'x0')
+
+yr3 = @(t, x) x - r3.*x.*(1-x);
+[t,x] = ode23(yr3, tspan, [x0 x0b]);
+subplot(2,2,3)
+plot(t, x, '-d')
+title('xdot = x - 2x(1-x)')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(x0b)), 'x0')
+
+%%
+% For all values of r, x = 0 is a fixed point. For r < 1, x = -1 is also a fixed point.
+% When x0 = -0.8, system converges on x = -1. For r = 1 and x0 = -1, the system
+% converges on zero. For r > 1 and x0 = -1, the system converges on zero quickly.
+
+%% xdot = x - rx^3
+%
+% A supercritical pitchfork bifurcation occurs at r = 0.
+
+r1 = -2;
+r2 = 0;
+r3 = 2;
+x = -4:0.01:4;
+y = @(x, r) x - (x.^3).*r;
+y1 = feval(y, x, r1);
+y2 = feval(y, x, r2);
+y3 = feval(y, x, r3);
+figure(7);
+plot(x, y1);
+hold on;
+plot(x, y2);
+plot(x, y3);
+plot(x,zeros(1,length(x)), 'k');
+plot(zeros(1,length(x)), x, 'k');
+title('xdot = x - rx^3');
+xlabel('x');
+ylabel('xdot');
+axis([-3 3 -1 4]);
+hold off;
+
+%%% Bifurcation diagram
+
+rmin = -4;
+rmax = 4;
+rstep = 0.01;
+rcrit = 0;
+xstar = @(r) (-(r.^0.5))./r;
+xstarb = @(r) (r.^0.5)./r;
+figure(8)
+hold on;
+bifplot(xstar, rmin, rmax, rstep, rcrit, 'after')
+bifplot(xstarb, rmin, rmax, rstep, rcrit, 'after')
+bifplot(@(r) r.*0, rmin, rmax, rstep, rcrit, 'after')
+title('Bifurcation diagram for xdot = x - rx^3');
+% xlabel('r');
+% ylabel('x');
+axis([-4 4 -4 4]);
+plot(zeros(1, 2), [-4 4], 'k');
+hold off;
+
+%%% Simulate
+
+tspan = [0 3];
+x0 = 0;
+x0b = -1;
+yr1 = @(t, x) x - (x.^3).*r1;
+[t,x] = ode23(yr1, tspan, [x0 x0b]);
+figure(9)
+subplot(2,2,1)
+plot(t, x, '-d')
+title('xdot = x + 2x^3')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(x0b)), 'x0')
+
+yr2 = @(t, x) x - (x.^3).*r2;
+[t,x] = ode23(yr2, tspan, [x0 x0b]);
+subplot(2,2,2)
+plot(t, x, '-d')
+title('xdot = x')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(x0b)), 'x0')
+
+yr3 = @(t, x) x - (x.^3).*r3;
+[t,x] = ode23(yr3, tspan, [x0 x0b]);
+subplot(2,2,3)
+plot(t, x, '-d')
+title('xdot = x - 2x^3')
+xlabel('t')
+ylabel('x')
+title(legend(num2str(x0), num2str(x0b)), 'x0')
+
+%%
+% For all values of r, x = 0 is a fixed point. For r = -2 and x0 = -1, the
+% system diverges from x = 0. For r = 0, the system is stable for x0 = 0 and
+% x0 = -1. For r = 2 and x0 = -1, the system onverges on -sqrt(2)/2.
+
+##### SOURCE END #####
+--></body></html>
