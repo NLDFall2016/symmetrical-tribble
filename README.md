@@ -1,7 +1,7 @@
 ### Rachael's NLD repository
 
-MIT licensed except where otherwise specified, meaning you can use the code
-  more or less however you want, with proper attribution.
+MIT licensed unless otherwise specified, meaning you can use the code
+  more or less however you want, with proper attribution (basically my name - see [LICENSE](https://github.com/NLDFall2016/symmetrical-tribble/blob/master/LICENSE)).
 
 ## Organization
 
